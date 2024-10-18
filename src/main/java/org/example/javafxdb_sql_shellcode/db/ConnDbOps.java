@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -147,5 +149,77 @@ public class ConnDbOps {
         }
     }
 
-    
+    public void updateUser(int id, String name, String email, String phone, String address, String password) {
+        String sql = "Update users Set name = ?, email = ?, phone = ?, address = ?, password = ?, WHERE id = ?";
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, phone);
+            preparedStatement.setString(4, address);
+            preparedStatement.setString(5, password);
+            preparedStatement.setInt(6, id);
+            preparedStatement.executeUpdate();
+            System.out.println("User Updated Successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void insertUser(int id, String name, String email, String phone, String address, String password){
+        try{
+            Connection conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+            String sql = "INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatment = conn.prepareStatement(sql);
+            preparedStatment.setString(1, name);
+            preparedStatment.setString(2, email);
+            preparedStatment.setString(3, phone);
+            preparedStatment.setString(4, address);
+            preparedStatment.setString(5, password);
+
+            int row = preparedStatment.executeUpdate();
+
+            if (row > 0){
+                System.out.println("A user was inserted successfully.");
+            }
+            preparedStatment.close();
+            conn.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void deleteUser(int id){
+        String sql = "DELETE FROM user WHERE id = ?";
+        try(Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+        System.out.println("user deleted successfully.");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public List<String> getAllUsers(){
+        List<String> users = new ArrayList<>();
+        String sql = "SELECT id, name FROM users";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                users.add(id + ": " + name);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+
+        }
+
+        return users;
+    }
+
+
 }
+
