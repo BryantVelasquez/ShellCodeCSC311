@@ -16,10 +16,10 @@ import java.sql.Statement;
  * @author MoaathAlrajab
  */
 public class ConnDbOps {
-    final String MYSQL_SERVER_URL = "jdbc:mysql://localhost/";
-    final String DB_URL = "jdbc:mysql://localhost/DBname";
-    final String USERNAME = "admin";
-    final String PASSWORD = "password";
+    final String MYSQL_SERVER_URL = "jdbc:mysql://velasquezcsc311server.mysql.database.azure.com/";
+    final String DB_URL = "jdbc:mysql://velasquezcsc311server.mysql.database.azure.com/DBname";
+    final String USERNAME = "Velasquez";
+    final String PASSWORD = "Dp215980519$";
     
     public  boolean connectToDatabase() {
         boolean hasRegistredUsers = false;
