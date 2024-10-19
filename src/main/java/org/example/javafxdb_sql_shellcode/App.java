@@ -58,10 +58,10 @@ public class App extends Application {
                     break;
 
                 case 'c':
-                    cdbop.connectToDatabase(); //Your existing method
+                    cdbop.connectToDatabase();
                     break;
                 case 'a':
-                    cdbop.listAllUsers(); //all users in DB
+                    cdbop.listAllUsers();
                     break;
 
                 case 'i':
@@ -80,7 +80,7 @@ public class App extends Application {
                 case 'q':
                     System.out.print("Enter the name to query: ");
                     String queryName = scan.next();
-                    cdbop.queryUserByName(queryName); //Your queryUserByName method
+                    cdbop.queryUserByName(queryName);
                     break;
                 case 'e':
                     System.out.println("Exiting...");

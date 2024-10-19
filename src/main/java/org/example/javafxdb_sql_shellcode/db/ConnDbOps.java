@@ -148,7 +148,7 @@ public class ConnDbOps {
             e.printStackTrace();
         }
     }
-
+        //updates an existing user
     public void updateUser(int id, String name, String email, String phone, String address, String password) {
         String sql = "Update users Set name = ?, email = ?, phone = ?, address = ?, password = ?, WHERE id = ?";
         try {
@@ -166,6 +166,7 @@ public class ConnDbOps {
             e.printStackTrace();
         }
     }
+    //inserts new user into existing user table
     public void insertUser(int id, String name, String email, String phone, String address, String password){
         try{
             Connection conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
@@ -188,6 +189,7 @@ public class ConnDbOps {
             e.printStackTrace();
         }
     }
+    //deletes user from the users table using the ID
     public void deleteUser(int id){
         String sql = "DELETE FROM user WHERE id = ?";
         try(Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
@@ -199,6 +201,7 @@ public class ConnDbOps {
             e.printStackTrace();
         }
     }
+    //returns all users from the existing users table and returns them as a list of strings
     public List<String> getAllUsers(){
         List<String> users = new ArrayList<>();
         String sql = "SELECT id, name FROM users";

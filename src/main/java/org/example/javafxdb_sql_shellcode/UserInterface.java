@@ -11,26 +11,28 @@ import java.util.List;
 
 public class UserInterface extends Application {
     private ConnDbOps connDbOps;
-    private ListView<String> userListView; // List to display users
+    private ListView<String> userListView;
 
+    //boolean to keep track of light or dark modes
     private boolean isLightTheme = true;
 
     public UserInterface(ConnDbOps connDbOps) {
         this.connDbOps = connDbOps;
     }
-
+// creates UI and event handlers
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("User Management");
         applyTheme(primaryStage);
-
+//creates a menu bar with a file menu and theme switch option
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         MenuItem switchThemeItem = new MenuItem("Switch Theme");
-        switchThemeItem.setOnAction(e -> switchTheme(primaryStage));
+        switchThemeItem.setOnAction(e -> switchTheme(primaryStage)); //switches theme
         menuFile.getItems().add(switchThemeItem);
         menuBar.getMenus().add(menuFile);
-
+//input fields for user data
+        // and buttons for inserting, editing, and deleting users
         TextField nameTextField = new TextField();
         TextField emailTextField = new TextField();
         TextField phoneTextField = new TextField();
@@ -39,7 +41,7 @@ public class UserInterface extends Application {
         Button insertButton = new Button("Insert User");
         Button editButton = new Button("Edit User");
         Button deleteButton = new Button("Delete User");
-
+    //displays users
         userListView = new ListView<>();
         refreshUserList();
 
@@ -94,17 +96,18 @@ public class UserInterface extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
+    // swithces between light and dark theme
     private void switchTheme(Stage primaryStage) {
         isLightTheme = !isLightTheme;
         applyTheme(primaryStage);
     }
+    //applies current theme
     private void applyTheme(Stage primaryStage) {
         String theme = isLightTheme ? "light-theme.css" : "dark-theme.css";
         primaryStage.getScene().getStylesheets().clear();
         primaryStage.getScene().getStylesheets().add(getClass().getResource("/" + theme).toExternalForm());
     }
-
+    //gets ID from the selected user
     private int getSelectedUserId() {
         String selected = userListView.getSelectionModel().getSelectedItem();
         if (selected != null) {
@@ -113,13 +116,13 @@ public class UserInterface extends Application {
         }
         return -1;
     }
-
+    //Refreshes user list
     private void refreshUserList() {
         userListView.getItems().clear();
         List<String> users = connDbOps.getAllUsers();
         userListView.getItems().addAll(users);
     }
-
+// displays alert
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
